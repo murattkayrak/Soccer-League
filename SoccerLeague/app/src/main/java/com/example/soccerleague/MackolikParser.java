@@ -49,28 +49,16 @@ public class MackolikParser extends AsyncTask {
 
                 if (!teamName.isEmpty()) {
                     String pictureLink = teamImageLinks.get(i).select("img").first().attr("src");
+                    Log.d("JSOUPbb picture link " + i, pictureLink); // team picture
                     Team team = new Team(teamName, league, pictureLink);
                     teamList.add(team);
-
-                    Log.d("JSOUPbb picture link " + i, pictureLink); // team picture
 
                 }
                 i++;
 
-
             }
 
             league.setTeamCount(teamList.size());
-
-
-
-
-
-
-
-
-
-
 
         }
         catch (IOException e) {

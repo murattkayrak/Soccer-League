@@ -4,7 +4,7 @@ public class Team {
 
     private String name;
     private League league;
-    private String pictureLink; // sonradan dahil edilebilir
+    private String pictureLink;
 
     public Team(String name) {
         this.name = name;

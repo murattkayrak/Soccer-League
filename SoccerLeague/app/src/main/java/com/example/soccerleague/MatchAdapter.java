@@ -42,12 +42,6 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MyViewHolder
         @Override
         public void onClick(View view) {
 
-//            int position = getAdapterPosition();
-
-//            Intent intent = new Intent(mContext, DetailsActivity.class);
-//            intent.putExtra("HisseID", hisseList.get(position).getId());
-//            mContext.startActivity(intent);
-
         }
 
 

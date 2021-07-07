@@ -1,18 +1,16 @@
 package com.example.soccerleague;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
-import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -38,7 +36,6 @@ public class DrawFixtureActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         progressBar.bringToFront();
 
-//        drawFixture(); // maç eşleşmeleri yapılarak sonuçlar db aktarılacak
         DatabaseHelper databaseHelper = new DatabaseHelper(DrawFixtureActivity.this);
         databaseHelper.addAllMatches(drawFixture());
 
@@ -65,23 +62,11 @@ public class DrawFixtureActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         int i;
-        for (i = 0; i < teamList.size() - 5; i++) { // takım sayısı düzeltilince -5 ortadan kaldırılmalı
-            adapter.addFragment(new MatchFragment(i), String.valueOf(i));
+        for (i = 0; i < teamList.size(); i++) {
+            adapter.addFragment(new MatchFragment(i), String.valueOf(i+1));
         }
         viewPager.setAdapter(adapter);
 
-
-        // aşağıdaki blok otomatize edilecek
-        // takım listesi boyutu kadar ekleme yapılacak, position i, title week i+1 olarak gönderilecek
-
-//        adapter.addFragment(new MatchFragment(1), "COMMPANY 0");
-//        adapter.addFragment(new MatchFragment(2), "SPAM 0");
-//        adapter.addFragment(new MatchFragment(3), "PERSONAL 1");
-//        adapter.addFragment(new MatchFragment(4), "COMMPANY 1");
-//        adapter.addFragment(new MatchFragment(5), "SPAM 1");
-//        adapter.addFragment(new MatchFragment(6), "PERSONAL 2");
-//        adapter.addFragment(new MatchFragment(7), "COMMPANY 2");
-//        adapter.addFragment(new MatchFragment(8), "SPAM 2");
     }
 
     public ArrayList<Match> drawFixture() {
@@ -93,41 +78,21 @@ public class DrawFixtureActivity extends AppCompatActivity {
         DatabaseHelper databaseHelper = new DatabaseHelper(DrawFixtureActivity.this);
         teamList = databaseHelper.getAllTeams();
 
-//        teamList = new ESPNParser().execute(); // db helper eklenecek / ordan takım listesi alınacak / dbHelper.getteamlist()
-
-        int i = 0, j = 0, size = teamList.size();
-//        size = 20; // 20 takım olmasına rağmen 25 görünüyor, manuel müdahale edildi
+        int i, j, size = teamList.size();
 
         for ( i = 0; i < size; i++ ) {
 
             for ( j = 0; j < size; j++) {
 
-//                if ( i != j ) {
-//                    Match match = new Match(teamList.get(i), teamList.get(j), i, "score", "date", "time"); // i ve j ile
                 int homeIndex = (i + j) % ( size - 1 );
                 int awayIndex = (size - 1 -j + i ) % ( size - 1 );
 
-                if ( homeIndex != awayIndex ) { // iki kere eşitleniyorlar, beklenen 1
-                    Match match = new Match(teamList.get(homeIndex), teamList.get(awayIndex), i, "score", "date", "time");
-                    matchList.add(match);
-
-                }
-            }
-        }
-
-        /*
-        for (Team teamHome : teamList) {
-            Log.d("MAINteamlist", teamHome.getName());
-
-            for ( Team teamAway : teamList) {
-                if ( i != j) {
-                    Match match = new Match(teamHome, teamAway, 74, "score", "date", "time");
+                if ( homeIndex != awayIndex ) {
+                    Match match = new Match(teamList.get(homeIndex), teamList.get(awayIndex), i, "X : X", "date", "time");
                     matchList.add(match);
                 }
             }
-
         }
-        */
 
         Log.d("MAINteamlist", "teamlistsize: " + size + " matchlist size:  " + matchList.size());
 

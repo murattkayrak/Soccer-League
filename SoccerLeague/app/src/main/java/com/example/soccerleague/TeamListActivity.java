@@ -38,27 +38,11 @@ public class TeamListActivity extends AppCompatActivity {
 
         listContext = getApplicationContext();
 
-        // ---------------------------
-//        League league = new League("league test", 5);
-//        Team hometeam = new Team("hometeam", league, "aasdsadas");
-//        Team awayteam = new Team("awayteam", league, "asdsadsadsa");
-//        teamList.add(hometeam);
-//        teamList.add(awayteam);
-        // ---------------------------
-
-//        DatabaseHelper databaseHelper = new DatabaseHelper(listContext);
-//        databaseHelper.addAllTeams(teamList);
-//        takımlar eklenmeden teamlist.clear yapılmalı
-
         teamList.clear();
         DatabaseHelper databaseHelper = new DatabaseHelper(TeamListActivity.this);
         teamList = databaseHelper.getAllTeams();
 
         Log.d("teamlist", String.valueOf(teamList.size()));
-
-
-
-
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -69,15 +53,6 @@ public class TeamListActivity extends AppCompatActivity {
         teamAdapter = new TeamAdapter(teamList);
         recyclerViewTeam.setAdapter(teamAdapter);
         teamAdapter.notifyDataSetChanged();
-
-
-
-
-
-
-
-
-
 
     }
 

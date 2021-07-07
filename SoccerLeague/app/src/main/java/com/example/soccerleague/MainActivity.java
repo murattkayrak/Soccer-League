@@ -1,8 +1,5 @@
 package com.example.soccerleague;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.UiModeManager;
@@ -13,8 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,16 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         final SharedPreferences sharedPreferences = getSharedPreferences("0",MODE_PRIVATE);
         final SharedPreferences.Editor editor1 = sharedPreferences.edit();
-//        boolean systemDarkMode;
-//        if (AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM == -1) { // bakılacak
-//            systemDarkMode = false;
-//        }
-//        else {
-//            systemDarkMode = true;
-//        }
-//        Log.d("darkMode", "" + systemDarkMode);
 
-        final boolean isNightModeOn = sharedPreferences.getBoolean("NightMode", false); // systemDarkMode
+        final boolean isNightModeOn = sharedPreferences.getBoolean("NightMode", false);
 
         getDataButtonESPN = findViewById(R.id.getDataButtonESPN);
         getDataButtonMackolik = findViewById(R.id.getDataButtonMackolik);
@@ -62,74 +53,14 @@ public class MainActivity extends AppCompatActivity {
         getDataButtonESPN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                Intent intent = new Intent( MainActivity.this, DrawFixtureActivity.class);
-//                startActivity(intent); // rename edilecek
-
-//                ESPNParser espnParser = new ESPNParser();
-//                espnParser.getTeamNames();
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Getting Teams");
-                builder.setMessage("Are you sure to recreate team list?");
-
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener(){
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        Toast.makeText(MainActivity.this, "Team list is not creating.", Toast.LENGTH_LONG ).show();
-
-                    }
-                });
-
-
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        new ESPNParser(MainActivity.this).execute();
-                        Toast.makeText(MainActivity.this, "Team list is creating... Please wait.", Toast.LENGTH_LONG ).show();
-
-                    }
-                });
-
-                builder.show();
-
+                alertDialog(0);
             }
         });
 
         getDataButtonMackolik.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                Intent intent = new Intent( MainActivity.this, DrawFixtureActivity.class);
-//                startActivity(intent); // rename edilecek
-
-//                ESPNParser espnParser = new ESPNParser();
-//                espnParser.getTeamNames();
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("Getting Teams");
-                builder.setMessage("Are you sure to recreate team list?");
-
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener(){
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        Toast.makeText(MainActivity.this, "Team list is not creating.", Toast.LENGTH_LONG ).show();
-
-                    }
-                });
-
-
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        new MackolikParser(MainActivity.this).execute();
-                        Toast.makeText(MainActivity.this, "Team list is creating... Please wait.", Toast.LENGTH_LONG ).show();
-
-                    }
-                });
-
-                builder.show();
-
+                alertDialog(1);
             }
         });
 
@@ -138,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent( MainActivity.this, TeamListActivity.class);
-                startActivity(intent); // rename edilecek
+                startActivity(intent);
 
             }
         });
@@ -147,16 +78,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Toast.makeText(MainActivity.this, "Match list is creating... Please wait.", Toast.LENGTH_LONG ).show();
                 Intent intent = new Intent( MainActivity.this, DrawFixtureActivity.class);
-                startActivity(intent); // rename edilecek
+                startActivity(intent);
 
             }
         });
 
-        if(isNightModeOn){ // if(systemDarkMode)
+        if (isNightModeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             switch_btn.setText("DISABLE DARK MODE");
-        } else {
+        }
+        else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             switch_btn.setText("ENABLE DARK MODE");
         }
@@ -173,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), "DARK MODE ENABLED.", Toast.LENGTH_LONG);
                     toast.show();
                     switch_btn.setText("DISABLE DARK MODE");
+
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     editor1.putBoolean("NightMode", true);
@@ -240,22 +174,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     public void setList(List<Team> list) {
@@ -263,5 +181,40 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
         databaseHelper.addAllTeams(teamList);
+    }
+
+    public void alertDialog (final int index) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Getting Teams");
+        builder.setMessage("Are you sure to recreate team list?");
+
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int id) {
+
+                Toast.makeText(MainActivity.this, "Team list is not creating.", Toast.LENGTH_LONG ).show();
+
+            }
+        });
+
+
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                if ( index == 0) {
+                    new ESPNParser(MainActivity.this).execute();
+
+                }
+                else {
+                    new MackolikParser(MainActivity.this).execute();
+
+                }
+                Toast.makeText(MainActivity.this, "Team list is creating... Please wait.", Toast.LENGTH_LONG ).show();
+
+            }
+        });
+
+        builder.show();
+
     }
 }

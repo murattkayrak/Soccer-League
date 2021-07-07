@@ -155,7 +155,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.close();
 
-
     }
 
     public List<Match> getWeekMatches (int week) {
@@ -188,7 +187,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null
         );
 
-
         if (cursor.moveToFirst()) {
             do {
                 Match match = new Match(
@@ -213,13 +211,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return matchList;
 
-
     }
-
-
-
-
-
-
-
+    
 }

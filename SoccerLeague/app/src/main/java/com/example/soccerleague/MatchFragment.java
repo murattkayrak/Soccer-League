@@ -33,25 +33,9 @@ public class MatchFragment extends Fragment {
 
         View v =  inflater.inflate(R.layout.fragment, container, false);
 
-//        ((TextView) v.findViewById(R.id.tvFragText)).setText(getArguments().getString("text"));
-
-        // haftalık maçlar için gerekli durumlar aktarılacak
-        // recycler view list eklenecek
-
-        // ---------------------------
-//        League league = new League("league test", 5);
-//        Team hometeam = new Team("hometeam", league, "wedfghnm");
-//        Team awayteam = new Team("awayteam", league, "wedfghnm");
-//        Match match = new Match(hometeam, awayteam, 14, "0:0", "06/07/2021", "03:52");
-//        matchList.add(match);
-        // ---------------------------
-
         DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
         matchList.clear();
         matchList = databaseHelper.getWeekMatches(this.position);
-
-
-
 
         recyclerView = v.findViewById(R.id.fragmentRecylerview);
 
@@ -71,10 +55,7 @@ public class MatchFragment extends Fragment {
         tvFragText = v.findViewById(R.id.tvFragText);
         tvFragText.append(String.valueOf(this.position + 1));
 
-        Log.d("fragment", "= " + container.getVerticalScrollbarPosition() + " indexofchild= " + container.indexOfChild(v) + " x= " + container.getScrollX() + " y= " + container.getScrollY()
-                + " tosting= " + container.toString() + " this.position= " + this.position );
-
-
+        Log.d("fragment", "this.position= " + this.position );
 
         return v;
     }
