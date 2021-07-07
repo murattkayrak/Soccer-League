@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import java.util.ArrayList;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class TeamListActivity extends AppCompatActivity {
+
+    public static Context listContext;
 
     private List<Team> teamList = new ArrayList<>();
 
@@ -32,15 +35,19 @@ public class TeamListActivity extends AppCompatActivity {
         recyclerViewTeam = findViewById(R.id.teamRecylerview);
 
 
+        listContext = getApplicationContext();
 
         // ---------------------------
         League league = new League("league test", 5);
-        Team hometeam = new Team("hometeam", league);
-        Team awayteam = new Team("awayteam", league);
+        Team hometeam = new Team("hometeam", league, "aasdsadas");
+        Team awayteam = new Team("awayteam", league, "asdsadsadsa");
         teamList.add(hometeam);
         teamList.add(awayteam);
         // ---------------------------
 
+//        DatabaseHelper databaseHelper = new DatabaseHelper(listContext);
+//        databaseHelper.addAllTeams(teamList);
+//        takımlar eklenmeden teamlist.clear yapılmalı
 
 
 

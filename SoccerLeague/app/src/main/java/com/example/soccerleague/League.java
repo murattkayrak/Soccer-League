@@ -9,6 +9,10 @@ public class League {
     private List<Team> teamList;
     private List<Match> matchList;
 
+    public League(String name) {
+        this.name = name;
+    }
+
     public League(String name, int teamCount) {
         this.name = name;
         this.teamCount = teamCount;

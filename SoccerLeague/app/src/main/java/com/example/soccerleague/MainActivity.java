@@ -7,13 +7,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button getDataButton;
     private Button teamListButton;
     private Button drawFixtureButton;
+
+    private List<Team> teamList = new ArrayList<>();
 
     @SuppressLint("ResourceType")
     @Override
@@ -29,8 +33,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent( MainActivity.this, DrawFixtureActivity.class);
-                startActivity(intent); // rename edilecek
+//                Intent intent = new Intent( MainActivity.this, DrawFixtureActivity.class);
+//                startActivity(intent); // rename edilecek
+
+//                ESPNParser espnParser = new ESPNParser();
+//                espnParser.getTeamNames();
+
+                new ESPNParser(MainActivity.this).execute();
 
             }
         });
@@ -73,5 +82,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void setList(List<Team> list) {
+        this.teamList = list;
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+        databaseHelper.addAllTeams(teamList);
     }
 }

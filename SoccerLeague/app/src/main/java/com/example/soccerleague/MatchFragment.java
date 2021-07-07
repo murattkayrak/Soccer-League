@@ -1,6 +1,7 @@
 package com.example.soccerleague;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,13 @@ import java.util.List;
 public class MatchFragment extends Fragment {
 
     private List<Match> matchList = new ArrayList<>();
-
+    private int position;
     private RecyclerView recyclerView;
     private MatchAdapter matchAdapter;
+    private TextView tvFragText;
 
-    public MatchFragment() {
+    public MatchFragment(int position) {
+        this.position = position;
     }
 
     @Override
@@ -36,12 +39,19 @@ public class MatchFragment extends Fragment {
         // recycler view list eklenecek
 
         // ---------------------------
-        League league = new League("league test", 5);
-        Team hometeam = new Team("hometeam", league);
-        Team awayteam = new Team("awayteam", league);
-        Match match = new Match(hometeam, awayteam, 14, "0:0", "06/07/2021", "03:52");
-        matchList.add(match);
+//        League league = new League("league test", 5);
+//        Team hometeam = new Team("hometeam", league, "wedfghnm");
+//        Team awayteam = new Team("awayteam", league, "wedfghnm");
+//        Match match = new Match(hometeam, awayteam, 14, "0:0", "06/07/2021", "03:52");
+//        matchList.add(match);
         // ---------------------------
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(getContext());
+        matchList.clear();
+        matchList = databaseHelper.getWeekMatches(this.position);
+
+
+
 
         recyclerView = v.findViewById(R.id.fragmentRecylerview);
 
@@ -58,6 +68,11 @@ public class MatchFragment extends Fragment {
         recyclerView.setAdapter(matchAdapter);
         matchAdapter.notifyDataSetChanged();
 
+        tvFragText = v.findViewById(R.id.tvFragText);
+        tvFragText.append(String.valueOf(this.position + 1));
+
+        Log.d("fragment", "= " + container.getVerticalScrollbarPosition() + " indexofchild= " + container.indexOfChild(v) + " x= " + container.getScrollX() + " y= " + container.getScrollY()
+                + " tosting= " + container.toString() + " this.position= " + this.position );
 
 
 

@@ -67,9 +67,9 @@ public class MatchAdapter extends RecyclerView.Adapter<MatchAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MatchAdapter.MyViewHolder holder, int position) {
 
-        holder.cardHomeTeam.setText(String.valueOf(matchList.get(position).getHomeTeam()));
+        holder.cardHomeTeam.setText(String.valueOf(matchList.get(position).getHomeTeam().getName()));
         holder.cardScore.setText(String.valueOf(matchList.get(position).getScore()));
-        holder.cardAwayTeam.setText(String.valueOf(matchList.get(position).getAwayTeam()));
+        holder.cardAwayTeam.setText(String.valueOf(matchList.get(position).getAwayTeam().getName()));
         holder.cardDate.setText(String.valueOf(matchList.get(position).getDate()));
         holder.cardTime.setText(String.valueOf(matchList.get(position).getTime()));
 
