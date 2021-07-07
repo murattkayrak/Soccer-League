@@ -31,7 +31,8 @@
             android:layout_height="wrap_content"
             android:text="GET DATA"
             android:layout_margin="5dp"
-            android:background="#0dbf0d" />
+            android:background="#0dbf0d"
+            android:textColor="@color/textAlt" />
 
         <Button
             android:id="@+id/teamListButton"
@@ -39,7 +40,8 @@
             android:layout_height="wrap_content"
             android:text="TEAM LIST"
             android:layout_margin="5dp"
-            android:background="#0dbf0d" />
+            android:background="#0dbf0d"
+            android:textColor="@color/textAlt" />
 
         <Button
             android:id="@+id/drawFixtureButton"
@@ -47,7 +49,26 @@
             android:layout_height="wrap_content"
             android:text="DRAW FIXTURE"
             android:layout_margin="5dp"
-            android:background="#0dbf0d" />
+            android:background="#0dbf0d"
+            android:textColor="@color/textAlt" />
+
+        <Button
+            android:id="@+id/switch_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ENABLE DARK MODE"
+            android:layout_margin="5dp"
+            android:background="#0dbf0d"
+            android:textColor="@color/textAlt" />
+
+        <Button
+            android:id="@+id/systemDarkMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FOLLOW SYSTEM DARK MODE"
+            android:layout_margin="5dp"
+            android:background="#0dbf0d"
+            android:textColor="@color/textAlt" />
 
 
     </LinearLayout>
