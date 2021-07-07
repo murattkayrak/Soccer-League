@@ -21,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String COLUMN_TEAM_ID = "TEAM_ID";
     private static final String COLUMN_NAME = "NAME";
+    private static final String COLUMN_TEAM_PICTURE = "TEAM_PICTURE";
 
     private static final String COLUMN_MATCH_ID = "COLUMN_MATCH_ID";
     private static final String COLUMN_HOME_TEAM = "HOME_TEAM";
@@ -33,7 +34,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TEAM_TABLE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_TEAM + " (" +
                     COLUMN_TEAM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                    COLUMN_NAME + " TEXT" + ")";
+                    COLUMN_NAME + " TEXT," +
+                    COLUMN_TEAM_PICTURE + " TEXT" + ")";
 
     private static final String CREATE_MATCH_TABLE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_MATCH + " (" +
@@ -80,6 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         for (Team team : teamList) {
             contentValues.put(COLUMN_NAME, team.getName());
+            contentValues.put(COLUMN_TEAM_PICTURE, team.getPictureLink());
             sqLiteDatabase.insert(TABLE_TEAM, null, contentValues);
 
         }
@@ -97,7 +100,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = null;
 
         String[] columns = {
-                COLUMN_NAME
+                COLUMN_NAME,
+                COLUMN_TEAM_PICTURE
         };
 
         cursor = sqLiteDatabase.query( TABLE_TEAM,
@@ -113,7 +117,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             do {
                 Team team = new Team(
-                        cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
+                        cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
+                        cursor.getString(cursor.getColumnIndex(COLUMN_TEAM_PICTURE))
                 );
 
                 teamList.add(team);

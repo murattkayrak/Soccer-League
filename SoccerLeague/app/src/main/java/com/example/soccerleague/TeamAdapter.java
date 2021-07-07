@@ -1,12 +1,16 @@
 package com.example.soccerleague;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,12 +26,14 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         private TextView listTeamName;
+        public ImageView teamImage;
 
         public MyViewHolder(View view) {
             super(view);
             view.setOnClickListener(this);
 
             listTeamName = view.findViewById(R.id.listTeamName);
+            teamImage = view.findViewById(R.id.teamImage);
 
         }
 
@@ -53,7 +59,23 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.listTeamName.setText(teamList.get(position).getName());
+        String imageURL = teamList.get(position).getPictureLink();
+        Log.d("imageURL", " kontrol " + imageURL);
+        if (imageURL != null) {
 
+            //put here picaso image load code
+            Picasso.with(holder.teamImage.getContext())
+                    .load(imageURL)
+                    .placeholder(R.drawable.emptyicon)
+                    .error(R.drawable.emptyicon)
+                    .fit()
+                    .into(holder.teamImage);
+
+        }
+        else {
+            holder.teamImage.setImageResource(R.drawable.emptyicon);
+        }
     }
 
     @Override

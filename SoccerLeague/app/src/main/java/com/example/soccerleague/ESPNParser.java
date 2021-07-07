@@ -35,6 +35,7 @@ public class ESPNParser extends AsyncTask {
 
             Document document = Jsoup.connect(baseURL).timeout(0).get();
             Elements teamRow = document.getElementsByClass("ContentList__Item");
+//            Elements teamRow = document.getElementsByClass("mt3");
 
             Log.d("JSOUP", teamRow.toString());
             int i = 0;
@@ -43,18 +44,24 @@ public class ESPNParser extends AsyncTask {
             for (Element element : teamRow ) {
 
                 String teamName = element.getElementsByClass("di clr-gray-01 h5").text();
-                Log.d("JSOUPbb " + i, teamName); // team name
+                Log.d("JSOUPbb name " + i, teamName); // team name
                 i++;
 
-//                Log.d("JSOUPaa " + i, element.getElementsByClass("Image Logo Logo__lg").first().toString()); // team picture
+                if (!teamName.isEmpty()) {
+                    Team team = new Team(teamName, league, "pictureLink");
+                    teamList.add(team);
+
+                    Log.d("JSOUPbb picture link " + i, element.getElementsByClass("AnchorLink").select("img").first().attr("abs:src").toString()); // team picture
+//                    Log.d("JSOUPbb picture " + i, element.select("div.mt3").first().select("img").first().absUrl("data-original")); // team picture
+//                    Log.d("JSOUPbb picture x " + i, element.select("img").first().absUrl("src")); // team picture
 
 //            Log.d("JSOUP", );
 //                String pictureLink = element.select("div.pl3").first().toString();
 //                String pictureLink = element.select("img").first().absUrl("src");
 //                Log.d("JSOUP pictureLink", pictureLink);
 
-                Team team = new Team(teamName, league, "pictureLink");
-                teamList.add(team);
+                }
+
 
             }
 

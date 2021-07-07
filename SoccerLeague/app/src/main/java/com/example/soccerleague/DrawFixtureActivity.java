@@ -8,6 +8,8 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -20,6 +22,8 @@ import java.util.Objects;
 
 public class DrawFixtureActivity extends AppCompatActivity {
 
+    public static ProgressBar progressBar;
+
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -29,6 +33,10 @@ public class DrawFixtureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw_fixture);
+
+        progressBar = findViewById(R.id.loadingPanel);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.bringToFront();
 
 //        drawFixture(); // maç eşleşmeleri yapılarak sonuçlar db aktarılacak
         DatabaseHelper databaseHelper = new DatabaseHelper(DrawFixtureActivity.this);
@@ -58,7 +66,7 @@ public class DrawFixtureActivity extends AppCompatActivity {
 
         int i;
         for (i = 0; i < teamList.size() - 5; i++) { // takım sayısı düzeltilince -5 ortadan kaldırılmalı
-            adapter.addFragment(new MatchFragment(i), "WEEK " + i );
+            adapter.addFragment(new MatchFragment(i), String.valueOf(i));
         }
         viewPager.setAdapter(adapter);
 
@@ -88,14 +96,19 @@ public class DrawFixtureActivity extends AppCompatActivity {
 //        teamList = new ESPNParser().execute(); // db helper eklenecek / ordan takım listesi alınacak / dbHelper.getteamlist()
 
         int i = 0, j = 0, size = teamList.size();
-        size = 20; // 20 takım olmasına rağmen 25 görünüyor, manuel müdahale edildi
+//        size = 20; // 20 takım olmasına rağmen 25 görünüyor, manuel müdahale edildi
 
         for ( i = 0; i < size; i++ ) {
 
             for ( j = 0; j < size; j++) {
 
-                if ( i != j ) {
-                    Match match = new Match(teamList.get(i), teamList.get(j), i, "score", "date", "time");
+//                if ( i != j ) {
+//                    Match match = new Match(teamList.get(i), teamList.get(j), i, "score", "date", "time"); // i ve j ile
+                int homeIndex = (i + j) % ( size - 1 );
+                int awayIndex = (size - 1 -j + i ) % ( size - 1 );
+
+                if ( homeIndex != awayIndex ) { // iki kere eşitleniyorlar, beklenen 1
+                    Match match = new Match(teamList.get(homeIndex), teamList.get(awayIndex), i, "score", "date", "time");
                     matchList.add(match);
 
                 }
@@ -117,6 +130,8 @@ public class DrawFixtureActivity extends AppCompatActivity {
         */
 
         Log.d("MAINteamlist", "teamlistsize: " + size + " matchlist size:  " + matchList.size());
+
+        progressBar.setVisibility(View.INVISIBLE);
 
         return matchList;
     }

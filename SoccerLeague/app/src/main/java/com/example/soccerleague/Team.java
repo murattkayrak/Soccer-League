@@ -10,6 +10,11 @@ public class Team {
         this.name = name;
     }
 
+    public Team(String name, String pictureLink) {
+        this.name = name;
+        this.pictureLink = pictureLink;
+    }
+
     public Team(String name, League league, String pictureLink) {
         this.name = name;
         this.league = league;

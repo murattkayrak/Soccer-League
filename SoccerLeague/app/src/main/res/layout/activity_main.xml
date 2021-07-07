@@ -8,28 +8,30 @@
 
 
 
-<!--    <ImageView-->
-<!--        android:id="@+id/logoImageView"-->
-<!--        android:layout_width="fill_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:src="@drawable/" />-->
-
-
-
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="100dp" >
+        android:layout_marginTop="20dp" >
 
 
         <Button
-            android:id="@+id/getDataButton"
+            android:id="@+id/getDataButtonESPN"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="GET DATA"
+            android:text="GET DATA (ESPN)"
+            android:layout_margin="5dp"
+            android:background="#0dbf0d"
+            android:textColor="@color/textAlt" />
+
+
+        <Button
+            android:id="@+id/getDataButtonMackolik"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="GET DATA (Mackolik)"
             android:layout_margin="5dp"
             android:background="#0dbf0d"
             android:textColor="@color/textAlt" />
@@ -69,6 +71,14 @@
             android:layout_margin="5dp"
             android:background="#0dbf0d"
             android:textColor="@color/textAlt" />
+
+
+
+        <ImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/background" />
 
 
     </LinearLayout>
